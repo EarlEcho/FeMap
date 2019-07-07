@@ -1,10 +1,11 @@
 
+
 # localStroage / sessionStorage / cookie 的区别和应用
 
 webStroage分为：本地存储 和 服务器存储
 
-其中本地存储分为两种类型：LocalStroage / sessionStrage
-服务器存储有：cookie
+- 其中本地存储分为两种类型：LocalStroage / sessionStrage
+- 服务器存储有：cookie
 
 ## **一. LocalStroage**
 
@@ -24,6 +25,7 @@ webStroage分为：本地存储 和 服务器存储
 * 是否和服务器通信：否
 * 优点：同localStroage
 
+####  使用语法
 LocalStroage和SessionStroage的使用语法相同：
 * 存储 / 改变值 —— `localStroage.setItem('name', value`);  // 存储了一个name属性，其值为value
 * 获取值 —— `localStroage.setItem('name');` // 获取name属性的值
@@ -32,7 +34,6 @@ LocalStroage和SessionStroage的使用语法相同：
 
 
 **注：不同浏览器无法共享localStorage或sessionStorage，相同浏览器的相同域名和端口的页面间可以共享相同的 localStorage，但是不同页面或标签页间无法共享sessionStorage的信息。这里需要注意的是，页面及标签页仅指顶级窗口，如果一个标签页包含多个iframe标签且他们属于同源页面，那么他们之间是可以共享sessionStorage的。**
-
 
 
 ## **三. Cookie**
@@ -54,6 +55,7 @@ Cookies是服务器在本地机器上存储的小段文本并随每一个请求�
     4. Cookie需要客户端浏览器支持。假如客户端禁用了Cookie，或者不支持Cookie，则会话跟踪会失效。
     5. 每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题	
 
+
 举个🌰来说明语法：
 在控制台输入`document.cookie`，可以看到的是
 
@@ -68,7 +70,7 @@ Cookies是服务器在本地机器上存储的小段文本并随每一个请求�
 
 ## **四：应用**
 
-localStroage —— 适合持久的存储方式 / 长期登录、判断用户是否已登录，适合长期保存在本地的数据
-sessionStroage —— 适合一次性会话的存储 / 敏感账号一次性登录
-cookie ——  保存登录时间、浏览次数等信息 / 判断用户是否登陆过网站，以便下次登录时能够实现自动登录（或者记住密码）
+* localStroage —— 适合持久的存储方式 / 长期登录、判断用户是否已登录，适合长期保存在本地的数据
+* sessionStroage —— 适合一次性会话的存储 / 敏感账号一次性登录
+* cookie ——  保存登录时间、浏览次数等信息 / 判断用户是否登陆过网站，以便下次登录时能够实现自动登录（或者记住密码）
 
