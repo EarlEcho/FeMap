@@ -4,8 +4,10 @@
 
 webStroage分为：本地存储 和 服务器存储
 
-- 其中本地存储分为两种类型：LocalStroage / sessionStrage
-- 服务器存储有：cookie
+- 其中本地存储分为两种类型：LocalStroage / sessionStrage / cookie
+- 服务器存储有：session
+
+这里主要介绍的是本地存储
 
 ## **一. LocalStroage**
 
@@ -46,8 +48,7 @@ Cookies是服务器在本地机器上存储的小段文本并随每一个请求�
 * 存储位置：仅在浏览器存储
 * 是否和服务器通信：是，会携带在http头上
 * 优点：
-    1. 可以通过加密和安全传输的技术，减少cookie被破解的可能性
-    2. 可以控制cookie的生命周期，这样被盗用的cookie很可能是一个失效的cookie
+    1. 可以控制cookie的生命周期，这样被盗用的cookie很可能是一个失效的cookie
 * 缺点
     1. cookie的长度和数量的限制。每个domain最多只能有20条cookie，每个cookie长度不能超过4KB，否则会被截掉。
     2. 安全性问题，如果cookie被人获取到了，就可以获取到所有session信息。
