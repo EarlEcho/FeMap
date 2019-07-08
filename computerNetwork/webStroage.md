@@ -1,5 +1,3 @@
-
-
 # localStroage / sessionStorage / cookie 的区别和应用
 
 webStroage分为：本地存储 和 服务器存储
@@ -28,6 +26,7 @@ webStroage分为：本地存储 和 服务器存储
 * 优点：同localStroage
 
 ####  使用语法
+
 LocalStroage和SessionStroage的使用语法相同：
 * 存储 / 改变值 —— `localStroage.setItem('name', value`);  // 存储了一个name属性，其值为value
 * 获取值 —— `localStroage.setItem('name');` // 获取name属性的值
