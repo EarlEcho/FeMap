@@ -70,12 +70,13 @@ IPv6数据首部格式如下图所示：
 
 1. **ARP ( Address Resolution Protocol )** —— ARP是以目标IP地址为线索，用来定位下一个应该接收数据分包的网络设备对应的MAC地址，如果目标主机不在同一个链路上时，可以通过ARP查找下一跳路由器的MAC地址。⚠️ARP只适用于IPv4，不可用于IPv6，在IPv6中可以用ICMPv6代替。
 2. **RARP ( Reverse Address Resolution Protocol )** —— 就是将ARP反过来，从MAC地址定位到IP地址的一种协议。
-3. **ICMP** —— 确认IP包是否成功送达目标地址，通知在发送过程中IP包被废弃的具体原因，改善网络设置等。主要应用场景为：一个刚建立好的网络，我们需要验证该网络的设置是否正确，并且在网络遇到问题的时候立即制止，并报告出来。
-
+3. **ICMP** —— 确认IP包是否成功送达目标地址，通知在发送过程中IP包被废弃的具体原因，改善网络设置等。主要应用场景为：一个刚建立好的网络，我们需要验证该网络的设置是否正确，并且在网络遇到问题的时候立即制止，并报告出来。         
 前面说到的IPv6中的ARP代替协议 `ICMPv6`，包含了ARP，ICMP的作用，在IPv6中，如果没有ICMPv6，IPv6就无法正常通信。
 
 4. **DHCP ( Dynamic Host Configuration Protocol )** —— 动态主机配置协议，实现自动设置IP地址，统一管理IP地址分配，
 5. **IP隧道** —— 在如下图的一个网络环境里，网络AB使用IPv6，中间位的C网络使用ipv4，这样AB网络将无法直接通信，而IP隧道就是解决不同网络间正常通信的问题。
-<img src="../static/img/IP隧道.png"></img>
 IP隧道中可以将哪些从网络A发过来的IPv6包统合为一个数据，再为之追加一个IPv4的首部以后转发给网络C。
 本来紧跟IP网络首部的是TCP或UDP的首部，然而现在情况是IP首部的后面是IPv6首部。
+
+<img src="../static/img/IP隧道.png"></img>
+
