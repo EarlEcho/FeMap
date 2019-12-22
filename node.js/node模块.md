@@ -1,0 +1,179 @@
+# node 的三大模块
+
+node 模块是整个 node 知识中最重要的一部分。
+node 模块可以分为以下 3 种：
+
+1. 全局模块
+2. 系统模块
+3. 自定义模块
+
+## 全局模块
+
+定义：随时随地都可以访问，不需要定义。
+
+这里使用 node 中的 process 模块来做例子：
+
+#### 一 ：process.env - 环境变量
+
+我们新建一个 node.js 文件，在里面输入：
+
+```js
+console.log(process.env); // 由于process是全局模块，所以不需要引入/定义就可以直接使用
+```
+
+使用 node 执行这个 js 文件，我们就可以看到控制台打印出来了本机的环境变量
+
+#### 一 ：process.argv - 环境变量
+
+通过访问 process.argv 我们能轻松愉快的接收通过命令执行 node 程序时候所传入的参数。
+
+🌰
+
+```js
+// 文件index.js中
+console.log(process.argv);
+// 在命令行中输入：
+> node p1.js --a -b c
+>  // 得到输出结果如下
+E:\w>node p1.js --a -b c
+[ 'C:\\Program Files\\nodejs\\node.exe',
+  'E:\\w\\p1.js',
+  '--a',
+  '-b',
+  'c' ]
+```
+
+翻译得到：argv —— 命令行变元数组。
+这是什么意思呢？我们都在命令行窗口中使用过 npm 命令来进行包的下载，在使用 npm 命令的时候我们还能进行一些传参，像要下载的包的名字啊，是`开发依赖`还是`生产依赖`啊。
+
+这些所传的参数 + node.exe 绝对路径 + node 所执行文件的绝对路径所组成的数组 = process.argv。
+它不止包含所传的参数还包含另外两个东东作为数组成员，故称之为`变元数组`。
+
+再看下面一个 🌰
+
+```js
+let num1 = parseInt(process.argv[2]);
+let num2 = parseInt(process.argv[3]);
+
+console.log(num1 + num2);
+
+// 在命令行中输入：
+> node index 11 22
+> 33 // 得到的输出结果
+```
+
+## 系统模块 （重点）
+
+定义：需要 require()，但是不需要单独下载
+这里用 2 个小例子来说明
+
+1. path —— 用于处理文件路径和目录路径的实用工具
+
+   新建一个 index.js 写入如下的内容：
+
+   ```js
+   let path = require('path'); // 引入path模块
+
+   // 这个模块有很多人的变量/方法可以使用，例如
+   console.log(path.dirname('/node/a/b/c/xxx.png'));    // 输出参数的路径
+   > '/node/a/b/c/'
+   console.log(path.basename('/node/a/b/c/xxx.png'));    // 输出参数的文件名
+   > 'xxx.png'
+   console.log(path.extname('/node/a/b/c/xxx.png'));    // 输出参数的后缀名
+   > '.png'
+   ```
+
+   上面几个方法呢可以运用在：判断前端传过来的文件是不是我们想要的。
+
+   而 path 模块下我们用的比较多的是 resolve()这个方法
+
+   同样的在 index.js 中实现以下的例子：
+
+   ```js
+   console.log(path.resolve(__dirname, 'index.js'));
+   // 在命令行使用node运行该js文件
+   > '/Users/echo/work/node/index.js'
+
+   // 这里打印出来的就是我们当前文件的绝对路径
+   ```
+
+   上面介绍到的 resolve()方法在很多地方都有用，毕竟当我们共享一个项目时，相对路径并不一定相同。这里我们先初步了解一下，再之后会常用到。
+
+2. fs —— 用于文件的读写操作
+
+   同样的在 index.js 中引入 fs 模块：
+
+   ```js
+   let fs = reqiure('fs');
+   ```
+
+   fs 有很多方法，比如:
+
+   `fs.readFile();`// readFile 方法接收两个参数 1.文件路径 2.回调函数
+
+   我们新建一个 index.txt 文件和 index.js 文件平级，并在 txt 文件中写入‘abc’, 接着在 index.js 中写入：
+
+   ```js
+   fs.readFile('./index.txt', (err, data) => {
+     // 回调函数有2个参数
+     // err - 有错误时的错误信息   data - 无错误时的data信息
+     if (err) {
+       console.log(err);
+     } else {
+       console.log(data);
+     }
+   });
+
+   // 这样执行index.js文件后我们会得到一个buffer的进制字符串，因为文件在电脑中存储都是使用二进制的，展示出来给我们看转成了十六进制。
+
+   // 所以我们需要对打印出来的data进行一下处理，改成
+   console.log(data.toString());
+   // 这样我们就可以得到
+   > abc  // 显示输出结果
+   ```
+
+   上面介绍了 fs 的 readFile()方法，那既然有读的方法，就肯定有写入的方法了：
+
+   `fs.writeFile()` // writeFile 方法接收 3 个参数 1.文件路径名称 2.文件内容 3.回调函数
+   接下来我们在 index.js 中写入：
+
+   ```js
+   fs.writeFile('a.txt', 'hello Echo', err => {
+     if (err) {
+       throw err;
+     }
+   });
+   ```
+
+   之后执行 index.js 文件，这样我们就能看到在运行 js 的目录下多出了一个 a.txt 文件，内容正是我们填入的`hello Echo`，由于我们没有在回调中打印任何东西，所以在控制台没有任何结果，但是文件是创建成功了的。
+   如果我们重复执行上述 js 代码，文件名不变，只是更改传入的内容，那么结果就是新生成的重新覆盖了原来的文件。
+   那么问题来了，如果我们只是想再原来的文件的基础上追加内容呢？这里可以使用`appendFile`方法
+
+   ```js
+   fs.appendFile('a.txt', 'Echo / /Echo', (err) => {
+     ...
+   });
+   ```
+
+   上述代码可以简写成：
+
+   ```js
+   fs.writeFile('a.txt', 'Echo / /Echo',{flag: 'a'} ,(err) => {
+     ...
+   });
+   ```
+
+   还是使用的 writeFile()方法只是多了个 flag 参数，a 表示'append'
+
+   我们上述使用的 readFile() / writeFile()方法，实际上是一个异步操作（有回调），那么如何来同步实现呢？这里有 readFileSync() / writeFileSync() 方法。
+
+   ```js
+   let data = fs.readFileSync('a.txt');
+   console.log(data.toString());
+
+   // 执行输出可得到a.txt文件中的内容。
+
+   fs.writeFileSync('b.txt', 'hhhh');
+   ```
+
+   这里同步操作和一步操作的区别只是少了个回调函数而已。
